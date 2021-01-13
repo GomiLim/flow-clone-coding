@@ -121,9 +121,9 @@ const ContentContainer = () => {
     return writeList.id === itemId;
   }
 
-  const checkPin = (item: { id: number }, calc: string) => {
-    setMakeTopLength((prevState) => (calc === 'plus' ? prevState + 1 : prevState - 1));
+  const checkPin = (item: { id: number }) => {
     const selectWrite = writeList.find((write: { id: number }) => findWrite(write, item.id));
+    setMakeTopLength((prevState) => (selectWrite.makeTop ? prevState - 1 : prevState + 1));
     dispatch(topToggle(selectWrite));
   };
 
@@ -169,7 +169,7 @@ const ContentContainer = () => {
                     <FontAwesomeIcon
                       style={{ float: 'right', marginTop: 7, transform: 'rotate(45deg)' }}
                       icon={faThumbtack}
-                      onClick={() => checkPin(item, 'minus')}
+                      onClick={() => checkPin(item)}
                       color={item.makeTop ? selectProject.mainColor : ''}
                     ></FontAwesomeIcon>
                     <span
@@ -199,7 +199,7 @@ const ContentContainer = () => {
               return (
                 <ContentTicket
                   key={`ticket-${idx}`}
-                  checkPin={() => checkPin(ticket, 'plus')}
+                  checkPin={() => checkPin(ticket)}
                   ticket={ticket}
                   mainColor={selectProject.mainColor}
                 />
